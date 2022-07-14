@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/widget/game.dart';
 
 class RecommendPage extends StatefulWidget {
   const RecommendPage({Key? key}) : super(key: key);
@@ -9,11 +12,11 @@ class RecommendPage extends StatefulWidget {
 
 class _RecommendPageState extends State<RecommendPage> {
   List<ActionItem> actionItems = [
-    ActionItem.action("云手机", "images/home_main_features_phone.png"),
-    ActionItem.action("新游首发", "images/home_main_features_new_game.png"),
-    ActionItem.action("邀请返现", "images/home_main_features_invitation.png"),
-    ActionItem.action("免费领券", "images/home_main_features_game_voucher.png"),
-    ActionItem.action("会员福利", "images/home_main_features_welfare.png")
+    ActionItem.action("云手机", "assets/images/home_main_features_phone.png"),
+    ActionItem.action("新游首发", "assets/images/home_main_features_new_game.png"),
+    ActionItem.action("邀请返现", "assets/images/home_main_features_invitation.png"),
+    ActionItem.action("免费领券", "assets/images/home_main_features_game_voucher.png"),
+    ActionItem.action("会员福利", "assets/images/home_main_features_welfare.png")
   ];
 
   List<Widget> getActionWidgets() {
@@ -22,9 +25,10 @@ class _RecommendPageState extends State<RecommendPage> {
           (e) => Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.asset(
               e.actionIcon,
-              width: 60.0,
-              height: 60.0,
+              width: 50.0,
+              height: 50.0,
             ),
+            const Padding(padding: EdgeInsets.only(top: 5.0)),
             Text(e.actionName),
           ]),
         )
@@ -34,6 +38,7 @@ class _RecommendPageState extends State<RecommendPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xffF7F7FA),
       child: Column(
         children: [
           actionBar(),
@@ -45,45 +50,47 @@ class _RecommendPageState extends State<RecommendPage> {
   Widget actionBar() {
     return Stack(
       children: [
-        Image.asset("images/home_main_top_bg.png"),
-        Column(
+        Image.asset("assets/images/home_main_top_bg.png"),
+        Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0),child:Column(
           children: [
+            // 搜索栏+下载中心
             Container(
               margin: const EdgeInsets.only(
-                  left: 20.0, top: 50.0, right: 20.0, bottom: 0),
+                  top: 50.0),
               child: Row(
                 children: [
                   Expanded(
                       child: Container(
-                    height: 36.0,
-                    padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-                    margin: const EdgeInsets.only(right: 10.0),
-                    decoration: const BoxDecoration(
-                        color: Color.fromRGBO(255, 255, 255, 0.1),
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    child: Row(
-                      children: [
-                        Image.asset("images/home_main_search_white.png",
-                            width: 16.0, height: 16.0),
-                        const Padding(padding: EdgeInsets.only(left: 10.0)),
-                        const Text("热门搜索",
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 0.2)))
-                      ],
-                    ),
-                  )),
+                        height: 36.0,
+                        padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+                        margin: const EdgeInsets.only(right: 10.0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.1),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                        child: Row(
+                          children: [
+                            Image.asset("assets/images/home_main_search_white.png",
+                                width: 16.0, height: 16.0),
+                            const Padding(padding: EdgeInsets.only(left: 10.0)),
+                            const Text("热门搜索",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 0.2)))
+                          ],
+                        ),
+                      )),
                   Image.asset(
-                    "images/home_main_download_center.png",
+                    "assets/images/home_main_download_center.png",
                     width: 30.0,
                     height: 30.0,
                   )
                 ],
               ),
             ),
+            // 金刚区
             Container(
               margin:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
-              height: 110.0,
+              const EdgeInsets.symmetric(vertical: 16.0),
+              height: 90.0,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -98,9 +105,58 @@ class _RecommendPageState extends State<RecommendPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: getActionWidgets(),
               ),
-            )
+            ),
+            // 抽奖结果公示栏
+            Container(
+              width: double.infinity,
+              height: 20.0,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                borderRadius:BorderRadius.all(Radius.circular(16.0)),
+                color: Colors.white,
+              ),
+              child: const Text("用户137******5436获得10元现金礼包获得10元现金礼包。",style: TextStyle(fontSize: 13.0,color: Color(0xfff35A06)),),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 10.0)),
+            Image.asset("assets/images/home_main_walfare.png"),
+            const Padding(padding: EdgeInsets.only(top: 10.0)),
+            Row(
+              children: [
+                Container(
+                  height: 12.0,
+                  width: 3.0,
+                  margin: const EdgeInsets.only(right: 5.0),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    gradient:LinearGradient(colors: [Color(0xffF47E5C),Color(0xffF4592F)]),
+                  ),
+                ),
+                const Text("精选推荐",style: TextStyle(fontWeight: FontWeight.w500),)
+              ],
+
+            ),
+            Row(
+              children: [
+                Container(
+                  height: 12.0,
+                  width: 3.0,
+                  margin: const EdgeInsets.only(right: 5.0),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    gradient:LinearGradient(colors: [Color(0xffF47E5C),Color(0xffF4592F)]),
+                  ),
+                ),
+                const Text("热门游戏",style: TextStyle(fontWeight: FontWeight.w500),),
+              ],
+            ),
+
+            GameWidget()
+
+
+
           ],
-        ),
+        ),)
+
       ],
     );
   }
