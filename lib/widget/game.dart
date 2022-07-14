@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class GameWidget extends StatefulWidget {
-  const GameWidget({Key? key}) : super(key: key);
+
+  final GameItem gameItem;
+
+  const GameWidget({Key? key, required this.gameItem}) : super(key: key);
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
@@ -12,7 +15,7 @@ class _GameWidgetState extends State<GameWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
+          color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(13.0)),
           boxShadow: [
             BoxShadow(
@@ -23,10 +26,11 @@ class _GameWidgetState extends State<GameWidget> {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.only(topLeft: Radius.circular(13.0),topRight: Radius.circular(13.0)),
-            child: Image.asset("assets/images/common_game_cover.png"),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(13.0),
+                topRight: Radius.circular(13.0)),
+            child: Image.asset(widget.gameItem.cover),
           ),
-
           Padding(
             padding: const EdgeInsets.only(
                 left: 10.0, top: 10.0, right: 20.0, bottom: 10.0),
@@ -38,9 +42,9 @@ class _GameWidgetState extends State<GameWidget> {
                     children: [
                       Row(
                         children: [
-                          const Text(
-                            "武侠全次元",
-                            style: TextStyle(
+                          Text(
+                            widget.gameItem.name,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 15.0),
                           ),
                           Container(
