@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sample/page/home.dart';
 import 'package:flutter_sample/page/splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,17 +13,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to Flutter',
-      theme: ThemeData(
-        primaryColor: Colors.white,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: HomePage(),
+    return ScreenUtilInit(builder: (context,child){
+      return  MaterialApp(
+        title: 'Welcome to Flutter',
+        theme: ThemeData(
+          primaryColor: Colors.white,
         ),
-      ),
-    );
+        home: const Scaffold(
+          body: Center(
+            child: HomePage(),
+          ),
+        ),
+      );
+    });
+
   }
 }
 

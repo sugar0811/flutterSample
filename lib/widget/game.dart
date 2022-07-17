@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sample/widget/tags.dart';
 
 class GameWidget extends StatefulWidget {
-
   final GameItem gameItem;
+  final bool isDownloadEnable;
 
-  const GameWidget({Key? key, required this.gameItem}) : super(key: key);
+  const GameWidget({Key? key, required this.gameItem , this.isDownloadEnable = false}) : super(key: key);
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
@@ -14,9 +15,10 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10.0),
       decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(13.0)),
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
@@ -47,65 +49,52 @@ class _GameWidgetState extends State<GameWidget> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 15.0),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(left: 5.0),
-                            padding: const EdgeInsets.all(2.0),
-                            decoration: const BoxDecoration(
-                                color: Color(0xffF2F2F2),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0))),
-                            child: const Text(
-                              "传奇",
-                              style: TextStyle(
-                                  fontSize: 12.0, color: Color(0xff666666)),
-                            ),
-                          )
+                          TagsWidget(tagsData: widget.gameItem.tags,bgColor: const Color(0xffF2F2F2),),
                         ],
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 3.0),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 1.0, horizontal: 2.0),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xffF04D4D)),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5.0))),
-                        child: const Text(
-                          "首充优惠",
-                          style: TextStyle(
-                              fontSize: 10.0, color: Color(0xffF04D4D)),
-                        ),
+                      TagsWidget(
+                          tagsData: widget.gameItem.activityTags,
+                          borderColor: const Color(0xffF04D4D),
+                          textColor: const Color(0xffF04D4D),
+                          margin: const EdgeInsets.only(top: 5.0,right: 3.0),
+                          padding: const EdgeInsets.symmetric(vertical: 1.0,horizontal: 2.0),
+                          spacing: const EdgeInsets.only(left: 3.0),
                       ),
+
                     ],
                   ),
                 ),
                 RichText(
                   textAlign: TextAlign.end,
-                  text: const TextSpan(
-                      text: "8.6",
-                      style: TextStyle(
+                  text: TextSpan(
+                      text: widget.gameItem.score,
+                      style: const TextStyle(
                           fontSize: 18.0,
                           color: Color(0xffF35A06),
                           fontWeight: FontWeight.w500),
-                      children: [
+                      children: const [
                         TextSpan(
                             text: " 分",
                             style: TextStyle(
                                 fontSize: 10.0, fontWeight: FontWeight.w500))
                       ]),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 3.0, horizontal: 15.0),
-                  decoration: const BoxDecoration(
-                      color: Color(0xffF35A06),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  child: const Text(
-                    "下载",
-                    style: TextStyle(color: Colors.white),
+                Offstage(
+                  offstage: !widget.isDownloadEnable,
+                  child:  Container(
+                    margin: const EdgeInsets.only(left: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 3.0, horizontal: 15.0),
+                    decoration: const BoxDecoration(
+                        color: Color(0xffF35A06),
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    child: const Text(
+                      "下载",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 )
+
               ],
             ),
           )
@@ -113,6 +102,7 @@ class _GameWidgetState extends State<GameWidget> {
       ),
     );
   }
+
 }
 
 class GameItem {
