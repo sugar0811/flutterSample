@@ -1,16 +1,16 @@
 import 'dart:async';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
-// 轮播图控件
+/// 轮播图控件
 class BannerWidget extends StatefulWidget {
   final List<String> _images;
   final ValueChanged<int>? onTap;
   final double height;
   final int duration;
 
-  const BannerWidget(this._images,
-      {Key? key, this.onTap, this.height = 200, this.duration = 3})
+   const BannerWidget(this._images,
+      {Key? key, this.onTap,this.height = 138, this.duration = 3})
       : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class BannerWidget extends StatefulWidget {
 class _BannerWidgetState extends State<BannerWidget> {
   int currentIndex = 0;
   late final PageController _pageController;
-  late Timer _timer;
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
@@ -55,9 +55,9 @@ class _BannerWidgetState extends State<BannerWidget> {
         onNotification: (ScrollNotification notify){
           // 滑动时暂停自动轮播
           if(notify.depth == 0 && notify is ScrollStartNotification){
-            _timer.cancel();
+            _timer?.cancel();
           }else if(notify is ScrollEndNotification){
-            _timer.cancel();
+            _timer?.cancel();
             _initTimer();
           }
           return false;
@@ -96,7 +96,6 @@ class _BannerWidgetState extends State<BannerWidget> {
               ),
             );
 
-            // Image.asset(widget._images[index],height: widget.height,width: double.infinity,);
           }),
     )
     );

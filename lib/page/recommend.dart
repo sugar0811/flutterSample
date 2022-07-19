@@ -1,12 +1,19 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_sample/BatteryChannel.dart';
+import 'package:flutter_sample/http/paging_entity.dart';
+import 'package:flutter_sample/http/request.dart';
 import 'package:flutter_sample/widget/banner.dart';
 import 'package:flutter_sample/widget/game.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../http/error.dart';
+import '../http/api_services.dart';
+import '../model/article.dart';
+import '../model/page_response_entity.dart';
 import '../widget/CustomBanner.dart';
 
 class RecommendPage extends StatefulWidget {
@@ -51,7 +58,10 @@ class _RecommendPageState extends State<RecommendPage> {
               height: 50.h,
             ),
             const Padding(padding: EdgeInsets.only(top: 5.0)),
-            Text(e.actionName,style: TextStyle(fontSize: 16),),
+            Text(
+              e.actionName,
+              style: TextStyle(fontSize: 11.w),
+            ),
           ]),
         )
         .toList();
@@ -124,7 +134,8 @@ class _RecommendPageState extends State<RecommendPage> {
                                     const Text("热门搜索",
                                         style: TextStyle(
                                             color: Color.fromRGBO(
-                                                255, 255, 255, 0.5),fontSize: 16))
+                                                255, 255, 255, 0.5),
+                                            fontSize: 16))
                                   ],
                                 ),
                               )),
@@ -194,17 +205,18 @@ class _RecommendPageState extends State<RecommendPage> {
                             ),
                             const Text(
                               "精选推荐",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16.0),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16.0),
                             )
                           ],
                         ),
                         const Padding(padding: EdgeInsets.only(top: 10.0)),
                         BannerWidget(
                           banners,
-                          onTap: (index){
+                          height: 138.h,
+                          onTap: (index) {
                             Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text("你点击了第$index页"))
-                            );
+                                SnackBar(content: Text("你点击了第$index页")));
                           },
                         ),
                         const Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -226,12 +238,17 @@ class _RecommendPageState extends State<RecommendPage> {
                             ),
                             const Text(
                               "热门游戏",
-                              style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16.0),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16.0),
                             ),
                           ],
                         ),
-                        generatorList()
-                        // ListView.builder(itemBuilder:(BuildContext context, int index) =>  )
+                        generatorList(),
+                        ElevatedButton(
+                            onPressed: () {
+                              req();
+                            },
+                            child: const Text("请求"))
                       ],
                     ),
                   ),
@@ -254,6 +271,17 @@ class _RecommendPageState extends State<RecommendPage> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: gameList.length,
     );
+  }
+
+  void req() async {
+    PagingEntity pagingParams = PagingEntity();
+    pagingParams.size = 10;
+    pagingParams.current = 1;
+    PageResponseEntity<ArticleModel>? list =
+        await homeService.getList(pagingParams);
+    var length = list?.data?.length;
+    list?.data?.map((e) => print(e.url));
+    print("list size = ${length}");
   }
 }
 
