@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_sample/page/home.dart';
 import 'package:flutter_sample/page/splash.dart';
 import 'package:flutter_sample/page/test.dart';
+import 'package:flutter_sample/router/router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         builder: EasyLoading.init(),
+        onGenerateRoute: onGenerateRoute,
       );
     });
 

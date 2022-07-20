@@ -7,6 +7,7 @@ import 'package:flutter_sample/BatteryChannel.dart';
 import 'package:flutter_sample/api/apis.dart';
 import 'package:flutter_sample/http/paging_entity.dart';
 import 'package:flutter_sample/http/request.dart';
+import 'package:flutter_sample/router/router.dart';
 import 'package:flutter_sample/widget/banner.dart';
 import 'package:flutter_sample/widget/game.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -244,12 +245,7 @@ class _RecommendPageState extends State<RecommendPage> {
                             ),
                           ],
                         ),
-                        generatorList(),
-                        ElevatedButton(
-                            onPressed: () {
-                              req();
-                            },
-                            child: const Text("请求"))
+                        generateList(),
                       ],
                     ),
                   ),
@@ -267,7 +263,10 @@ class _RecommendPageState extends State<RecommendPage> {
   Widget generateList() {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) =>
-          GameWidget(gameItem: gameList[index]),
+      GestureDetector(
+        onTap: goDetail,
+        child:  GameWidget(gameItem: gameList[index]),
+      ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: gameList.length,
@@ -282,6 +281,10 @@ class _RecommendPageState extends State<RecommendPage> {
         await homeService.getArticleList(pagingParams);
     var length = list?.data?.length;
     print("list size = $length");
+  }
+
+  void goDetail() {
+    Navigator.of(context).pushNamed(RouterManager.gameDetail);
   }
 }
 
