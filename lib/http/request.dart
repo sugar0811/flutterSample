@@ -58,6 +58,9 @@ class RequestClient {
 
       /// 如果发生异常，由onError处理
       onError?.call(apiException);
+      print(apiException.message??"");
+      EasyLoading.showError(apiException.message??"");
+
     }
     return null;
   }
@@ -65,7 +68,7 @@ class RequestClient {
   /// 处理http请求响应
   T? _handleResponse<T>(Response response) {
     if (response.statusCode == 200) {
-      ApiResponse<T> apiResponse = ApiResponse<T>().fromJson(response.data);
+      ApiResponse<T> apiResponse = ApiResponse<T>.fromJson(response.data);
       return _handleBusinessResponse<T>(apiResponse);
     } else {
       /// 未知的http错误 直接抛出

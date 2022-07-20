@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_sample/BatteryChannel.dart';
+import 'package:flutter_sample/api/apis.dart';
 import 'package:flutter_sample/http/paging_entity.dart';
 import 'package:flutter_sample/http/request.dart';
 import 'package:flutter_sample/widget/banner.dart';
@@ -263,7 +264,7 @@ class _RecommendPageState extends State<RecommendPage> {
     );
   }
 
-  Widget generatorList() {
+  Widget generateList() {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) =>
           GameWidget(gameItem: gameList[index]),
@@ -278,10 +279,9 @@ class _RecommendPageState extends State<RecommendPage> {
     pagingParams.size = 10;
     pagingParams.current = 1;
     PageResponseEntity<ArticleModel>? list =
-        await homeService.getList(pagingParams);
+        await homeService.getArticleList(pagingParams);
     var length = list?.data?.length;
-    list?.data?.map((e) => print(e.url));
-    print("list size = ${length}");
+    print("list size = $length");
   }
 }
 

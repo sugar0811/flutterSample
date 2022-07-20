@@ -1,7 +1,9 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_sample/page/home.dart';
 import 'package:flutter_sample/page/splash.dart';
+import 'package:flutter_sample/page/test.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
             child: HomePage(),
           ),
         ),
+        builder: EasyLoading.init(),
       );
     });
 

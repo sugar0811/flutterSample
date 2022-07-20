@@ -55,7 +55,7 @@ class ApiException implements Exception {
               return ApiException(
                   errCode, error.response?.statusMessage ?? '未知错误');
           }
-        } on Exception catch (e) {
+        } catch (e) {
           return ApiException(-1, unknownException);
         }
       default:

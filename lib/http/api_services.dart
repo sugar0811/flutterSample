@@ -4,6 +4,8 @@ import 'package:flutter_sample/model/article.dart';
 import 'package:flutter_sample/model/page_response_entity.dart';
 
 import '../api/apis.dart';
+import 'error.dart';
+import 'iservice.dart';
 
 ///  @author: shuYang
 ///  @date: 2022/7/19
@@ -11,14 +13,19 @@ import '../api/apis.dart';
 
 HomeService homeService = HomeService();
 
-class HomeService {
+class HomeService extends IApiService{
 
-  static const homeBaseUrl = "https://www.fastmock.site/mock/";
+  final RequestClient _homeRequestClient = RequestClient(Hosts.homeBaseUrl);
 
-  final RequestClient _homeRequestClient = RequestClient(homeBaseUrl);
+  @override
+  RequestClient getClient()  => _homeRequestClient;
 
-  Future<PageResponseEntity<ArticleModel>?> getList(PagingEntity params) async{
-    return await _homeRequestClient.post<PageResponseEntity<ArticleModel>>(Apis.articleList,data: params);
 
+  Future<PageResponseEntity<ArticleModel>?> getArticleList(
+      PagingEntity params) async {
+    return await _homeRequestClient
+        .post<PageResponseEntity<ArticleModel>>(HomeApis.articleList,data: params);
   }
+
+
 }
