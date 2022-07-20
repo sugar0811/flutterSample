@@ -4,6 +4,8 @@ import 'package:flutter_sample/page/mine.dart';
 import 'package:flutter_sample/page/recommend.dart';
 import 'package:flutter_sample/page/welfare.dart';
 
+import '../widget/NestedTabBarView1.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    pages = [RecommendPage(), DisCoverPage(), WelfarePage(), MinePage()];
+    pages = [RecommendPage(), NestedTabBarView1(), WelfarePage(), MinePage()];
     bottomWidgets = items.map((item) =>
         BottomNavigationBarItem(
           icon: Image.asset(

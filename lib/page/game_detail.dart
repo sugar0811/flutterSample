@@ -14,75 +14,131 @@ class GameDetailPage extends StatefulWidget {
 }
 
 class _GameDetailPageState extends State<GameDetailPage> {
+  final ScrollController _scrollController = ScrollController();
+  Color iconColor = Colors.white;
+  Color textColor = const Color.fromRGBO(255, 255, 255, 0);
+  List<String> tabs = ["详情", "评论"];
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      var offset = _scrollController.offset;
+      if (offset > 220.h) {
+        return;
+      }
+      setState(() {
+        var scale = offset / 220.h;
+        var color = 255 - (255 * (scale)).toInt();
+        iconColor = Color.fromRGBO(color, color, color, 1);
+        textColor = Color.fromRGBO(color, color, color, scale);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomScrollView(
-          slivers: [
-            SliverAppBar(
-            surfaceTintColor:Colors.black,
-            foregroundColor: Colors.orange,
-              leading: Text("leading"),
-                actions: [
-                  Text("王者荣耀1 "),
-                  Text("王者荣耀2 "),
-                  Text("王者荣耀3 "),
-                ],
-                backgroundColor: Colors.white,
-                expandedHeight: 220.h,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                "assets/images/home_game_detail_top_bg.png"),
-                            fit: BoxFit.cover,
-                            opacity: 0.7)),
+        DefaultTabController(
+          length: tabs.length,
+          child: Scaffold(
+            body: NestedScrollView(
+              controller: _scrollController,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return [
+                  SliverOverlapAbsorber(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                    sliver: SliverAppBar(
+                        centerTitle: true,
+                        title: Text("王者荣耀", style: TextStyle(color: textColor)),
+                        leading: IconButton(
+                            onPressed: () {},
+                            icon: ImageIcon(
+                              const AssetImage(
+                                  "assets/images/common_back_white.png"),
+                              color: iconColor,
+                              size: 30.0,
+                            )),
+                        actions: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: ImageIcon(
+                                const AssetImage(
+                                    "assets/images/common_coll_normal.png"),
+                                color: iconColor,
+                                size: 30.0,
+                              )),
+                          IconButton(
+                              onPressed: () {},
+                              icon: ImageIcon(
+                                const AssetImage(
+                                    "assets/images/common_share_white.png"),
+                                color: iconColor,
+                                size: 30.0,
+                              ))
+                        ],
+                        expandedHeight: 354.h,
+                        backgroundColor: Colors.white,
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          background: Column(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/home_game_detail_top_bg.png"),
+                                        fit: BoxFit.cover,
+                                        opacity: 0.7)),
+                                height: 220.h,
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(bottom: 12.h),
+                                color: Colors.green,
+                                height: 82.h,
+                              )
+                            ],
+                          ),
+                        ),
+                        bottom: TabBar(
+                          tabs: tabs
+                              .map((e) => Tab(
+                                    text: e,
+                                  ))
+                              .toList(),
+                        )),
                   ),
-                )),
-            SliverToBoxAdapter(
-              child: Container(
-                color: Colors.green,
-                height: 82.h,
+                ];
+              },
+              body: TabBarView(
+                children: [
+                  Builder(builder: (BuildContext context) {
+                   return CustomScrollView(
+                      slivers: [
+                        SliverOverlapInjector(
+                          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                              context)),
+                           SliverToBoxAdapter(
+                              child: Container(
+                                margin: EdgeInsets.only(top: 0.h),
+                                height: 30.0,
+                                color: Colors.grey,
+                                child: Text(
+                                  "page1",
+                                  style: TextStyle(color: Colors.black, fontSize: 20.0),
+                                ),
+                              )),
+                      ],
+                    );
+                  }),
+                  Text("page2")
+                ],
               ),
             ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverHeaderDelegate(
-                  child: Container(
-                      color: Colors.orange, child: const Text("tabBar")),
-                  maxHeight: 50.0,
-                  minHeight: 50.0),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                color: Colors.red,
-                height: 900.h,
-                child: Column(
-                  children: [
-                    Text("1"),
-                    Text(
-                      "2",
-                    ),
-                    Text(
-                      "3",
-                    ),
-                    Text(
-                      "4",
-                    ),
-                    Text(
-                      "5",
-                    ),
-                    Text(
-                      "6",
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
         Positioned(
           bottom: 0,
