@@ -94,21 +94,37 @@ class _GameDetailPageState extends State<GameDetailPage> {
                                         fit: BoxFit.cover,
                                         opacity: 0.7)),
                                 height: 220.h,
+                                width: double.infinity,
+                                child: _gameMsgArea(),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(bottom: 12.h),
-                                color: Colors.green,
-                                height: 82.h,
-                              )
+                              _welfareArea(),
+                              Expanded(
+                                  child: Container(
+                                color: Color(0xfff5f5f5),
+                              ))
                             ],
                           ),
                         ),
-                        bottom: TabBar(
-                          tabs: tabs
-                              .map((e) => Tab(
-                                    text: e,
-                                  ))
-                              .toList(),
+                        bottom: PreferredSize(
+                          preferredSize: Size.fromHeight(40.h),
+                          child: Material(
+                            color: Colors.white,
+                            child: TabBar(
+                              labelColor: Colors.red,
+                              unselectedLabelColor: Color(0xff666666),
+                              indicatorSize: TabBarIndicatorSize.label,
+                              indicator: UnderlineTabIndicator(
+                                borderSide: BorderSide(width: 3.w,color: Colors.red)
+                              ),
+                              tabs: tabs
+                                  .map((e) => Tab(
+                                        child: Container(
+                                          child: Text(e),
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                          ),
                         )),
                   ),
                 ];
@@ -116,25 +132,27 @@ class _GameDetailPageState extends State<GameDetailPage> {
               body: TabBarView(
                 children: [
                   Builder(builder: (BuildContext context) {
-                   return CustomScrollView(
+                    return CustomScrollView(
                       slivers: [
                         SliverOverlapInjector(
-                          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                              context)),
-                           SliverToBoxAdapter(
-                              child: Container(
-                                margin: EdgeInsets.only(top: 0.h),
-                                height: 30.0,
-                                color: Colors.grey,
-                                child: Text(
-                                  "page1",
-                                  style: TextStyle(color: Colors.black, fontSize: 20.0),
-                                ),
-                              )),
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                    context)),
+                        SliverToBoxAdapter(
+                            child: Container(
+                          margin: EdgeInsets.only(top: 0.h),
+                          height: 30.0,
+                          color: Colors.grey,
+                          child: const Text(
+                            "page1",
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20.0),
+                          ),
+                        )),
                       ],
                     );
                   }),
-                  Text("page2")
+                  const Text("page2")
                 ],
               ),
             ),
@@ -157,6 +175,207 @@ class _GameDetailPageState extends State<GameDetailPage> {
           ),
         )
       ],
+    );
+  }
+
+  Stack _gameMsgArea() {
+    return Stack(
+      children: [
+        Container(
+          color: const Color.fromRGBO(0, 0, 0, 0.3),
+        ),
+        Positioned(
+          left: 15.w,
+          top: 130.h,
+          width: 66.w,
+          height: 66.w,
+          child: Image.asset("assets/images/home_game_detail_logo.png"),
+        ),
+        Positioned(
+            left: 95.w,
+            top: 124.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "王者荣耀",
+                  style: TextStyle(
+                      fontSize: 18.w,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      shadows: const [
+                        Shadow(
+                            color: Colors.black,
+                            offset: Offset(2, 3.0),
+                            blurRadius: 2.0),
+                      ]),
+                ),
+                Container(
+                  width: 130.w,
+                  child: Wrap(
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(maxWidth: 56.w),
+                        margin: EdgeInsets.only(top: 4.h, right: 7.w),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 3.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.w),
+                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
+                        child: Center(
+                            child: Text("最多五个字",
+                                style: TextStyle(
+                                    fontSize: 10.w, color: Colors.white),
+                                maxLines: 1)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(maxWidth: 56.w),
+                        margin: EdgeInsets.only(top: 4.h, right: 7.w),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 3.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.w),
+                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
+                        child: Center(
+                            child: Text("最多五个字",
+                                style: TextStyle(
+                                    fontSize: 10.w, color: Colors.white),
+                                maxLines: 1)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(maxWidth: 56.w),
+                        margin: EdgeInsets.only(top: 4.h, right: 7.w),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 3.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.w),
+                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
+                        child: Center(
+                            child: Text("最多五个字",
+                                style: TextStyle(
+                                    fontSize: 10.w, color: Colors.white),
+                                maxLines: 1)),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        constraints: BoxConstraints(maxWidth: 56.w),
+                        margin: EdgeInsets.only(top: 4.h, right: 7.w),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 3.0, horizontal: 3.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.w),
+                            color: const Color.fromRGBO(0, 0, 0, 0.5)),
+                        child: Center(
+                            child: Text("最多五个字",
+                                style: TextStyle(
+                                    fontSize: 10.w, color: Colors.white),
+                                maxLines: 1)),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )),
+        Positioned(
+            right: 16.w,
+            bottom: 28.h,
+            child: Container(
+              padding: EdgeInsets.all(7.w),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.w),
+                  color: const Color.fromRGBO(0, 0, 0, 0.5)),
+              child: Column(
+                children: [
+                  Text(
+                    "评分",
+                    style: TextStyle(color: Colors.white, fontSize: 10.w),
+                  ),
+                  Text(
+                    "8.6",
+                    style: TextStyle(color: Colors.white, fontSize: 24.w),
+                  ),
+                ],
+              ),
+            ))
+      ],
+    );
+  }
+
+  /// 游戏福利区
+  Container _welfareArea() {
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 11.h),
+      height: 82.h,
+      child: Row(
+        children: [
+          Container(
+            width: 142.w,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.w),
+                border: Border.all(
+                  color: const Color(0xffFD4B0F),
+                )),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Padding(padding: EdgeInsets.only(top: 6.h)),
+                      RichText(
+                        text: TextSpan(
+                          text: "￥",
+                          style: TextStyle(
+                              fontSize: 12.w,
+                              color: const Color(0xfff35a06),
+                              fontWeight: FontWeight.w600),
+                          children: [
+                            TextSpan(
+                                text: "50", style: TextStyle(fontSize: 18.w))
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "免费充值卷",
+                        style: TextStyle(
+                            color: const Color(0xff666666), fontSize: 10.w),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        height: 10.h,
+                        width: 70.w,
+                        margin: EdgeInsets.only(top: 7.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.w),
+                          color: const Color(0xffc2c2c2),
+                        ),
+                        child: Text(
+                          "0%",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.w,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 58.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.w),
+                    color: Color(0xffff650e),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
